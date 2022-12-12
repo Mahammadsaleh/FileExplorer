@@ -9,3 +9,4 @@ C:\Users\User\Documents\2ci kurs\c#\MyExplorer\MyExplorer\obj\Debug\MyExplorer.c
 C:\Users\User\Documents\2ci kurs\c#\MyExplorer\MyExplorer\obj\Debug\MyExplorer.csproj.CoreCompileInputs.cache
 C:\Users\User\Documents\2ci kurs\c#\MyExplorer\MyExplorer\obj\Debug\MyExplorer.exe
 C:\Users\User\Documents\2ci kurs\c#\MyExplorer\MyExplorer\obj\Debug\MyExplorer.pdb
+C:\Users\User\Documents\2ci kurs\c#\MyExplorer\MyExplorer\obj\Debug\MyExplorer.TextFileOpener.resources

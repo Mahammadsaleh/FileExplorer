@@ -31,9 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.Undo = new System.Windows.Forms.Button();
-            this.Redo = new System.Windows.Forms.Button();
-            this.comboBoxPath = new System.Windows.Forms.ComboBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tvDriversAndFolders = new System.Windows.Forms.TreeView();
             this.icons = new System.Windows.Forms.ImageList(this.components);
@@ -42,60 +39,33 @@
             this.date = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.type = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.size = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.Undo = new System.Windows.Forms.Button();
+            this.comboBoxPath = new System.Windows.Forms.ComboBox();
+            this.Redo = new System.Windows.Forms.Button();
+            this.tipForSize = new System.Windows.Forms.ToolTip(this.components);
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.Undo);
-            this.panel1.Controls.Add(this.Redo);
-            this.panel1.Controls.Add(this.comboBoxPath);
             this.panel1.Controls.Add(this.splitContainer1);
+            this.panel1.Controls.Add(this.panel2);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(800, 442);
+            this.panel1.Size = new System.Drawing.Size(865, 554);
             this.panel1.TabIndex = 0;
-            // 
-            // Undo
-            // 
-            this.Undo.Image = ((System.Drawing.Image)(resources.GetObject("Undo.Image")));
-            this.Undo.Location = new System.Drawing.Point(8, 10);
-            this.Undo.Name = "Undo";
-            this.Undo.Size = new System.Drawing.Size(47, 27);
-            this.Undo.TabIndex = 4;
-            this.Undo.UseVisualStyleBackColor = true;
-            this.Undo.Click += new System.EventHandler(this.Undo_Click);
-            // 
-            // Redo
-            // 
-            this.Redo.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.Redo.Image = ((System.Drawing.Image)(resources.GetObject("Redo.Image")));
-            this.Redo.Location = new System.Drawing.Point(56, 10);
-            this.Redo.Name = "Redo";
-            this.Redo.Size = new System.Drawing.Size(47, 27);
-            this.Redo.TabIndex = 3;
-            this.Redo.UseVisualStyleBackColor = true;
-            this.Redo.Click += new System.EventHandler(this.Redo_Click);
-            // 
-            // comboBoxPath
-            // 
-            this.comboBoxPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBoxPath.FormattingEnabled = true;
-            this.comboBoxPath.Location = new System.Drawing.Point(105, 9);
-            this.comboBoxPath.Name = "comboBoxPath";
-            this.comboBoxPath.Size = new System.Drawing.Size(695, 28);
-            this.comboBoxPath.TabIndex = 0;
-            this.comboBoxPath.SelectedIndexChanged += new System.EventHandler(this.comboBoxPath_SelectedIndexChanged);
-            this.comboBoxPath.MouseClick += new System.Windows.Forms.MouseEventHandler(this.comboBoxPath_MouseClick);
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Location = new System.Drawing.Point(0, 42);
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 31);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -105,18 +75,19 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.lvFolders);
-            this.splitContainer1.Size = new System.Drawing.Size(800, 408);
-            this.splitContainer1.SplitterDistance = 266;
+            this.splitContainer1.Size = new System.Drawing.Size(865, 523);
+            this.splitContainer1.SplitterDistance = 188;
             this.splitContainer1.TabIndex = 1;
             // 
             // tvDriversAndFolders
             // 
+            this.tvDriversAndFolders.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvDriversAndFolders.ImageIndex = 0;
             this.tvDriversAndFolders.ImageList = this.icons;
-            this.tvDriversAndFolders.Location = new System.Drawing.Point(3, -2);
+            this.tvDriversAndFolders.Location = new System.Drawing.Point(0, 0);
             this.tvDriversAndFolders.Name = "tvDriversAndFolders";
             this.tvDriversAndFolders.SelectedImageIndex = 0;
-            this.tvDriversAndFolders.Size = new System.Drawing.Size(264, 402);
+            this.tvDriversAndFolders.Size = new System.Drawing.Size(188, 523);
             this.tvDriversAndFolders.TabIndex = 0;
             this.tvDriversAndFolders.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvDriversAndFolders_AfterSelect);
             // 
@@ -135,10 +106,12 @@
             this.date,
             this.type,
             this.size});
+            this.lvFolders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvFolders.GridLines = true;
             this.lvFolders.HideSelection = false;
-            this.lvFolders.Location = new System.Drawing.Point(3, -2);
+            this.lvFolders.Location = new System.Drawing.Point(0, 0);
             this.lvFolders.Name = "lvFolders";
-            this.lvFolders.Size = new System.Drawing.Size(527, 402);
+            this.lvFolders.Size = new System.Drawing.Size(673, 523);
             this.lvFolders.SmallImageList = this.icons;
             this.lvFolders.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvFolders.StateImageList = this.icons;
@@ -146,6 +119,7 @@
             this.lvFolders.UseCompatibleStateImageBehavior = false;
             this.lvFolders.View = System.Windows.Forms.View.Details;
             this.lvFolders.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lvFolders_ItemSelectionChanged);
+            this.lvFolders.SelectedIndexChanged += new System.EventHandler(this.lvFolders_SelectedIndexChanged);
             this.lvFolders.DoubleClick += new System.EventHandler(this.lvFolders_DoubleClick);
             // 
             // name
@@ -168,11 +142,53 @@
             this.size.Text = "Size";
             this.size.Width = 72;
             // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.Undo);
+            this.panel2.Controls.Add(this.comboBoxPath);
+            this.panel2.Controls.Add(this.Redo);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(865, 31);
+            this.panel2.TabIndex = 5;
+            // 
+            // Undo
+            // 
+            this.Undo.Image = ((System.Drawing.Image)(resources.GetObject("Undo.Image")));
+            this.Undo.Location = new System.Drawing.Point(3, 2);
+            this.Undo.Name = "Undo";
+            this.Undo.Size = new System.Drawing.Size(91, 27);
+            this.Undo.TabIndex = 4;
+            this.Undo.UseVisualStyleBackColor = true;
+            this.Undo.Click += new System.EventHandler(this.Undo_Click);
+            // 
+            // comboBoxPath
+            // 
+            this.comboBoxPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboBoxPath.FormattingEnabled = true;
+            this.comboBoxPath.Location = new System.Drawing.Point(192, 3);
+            this.comboBoxPath.Name = "comboBoxPath";
+            this.comboBoxPath.Size = new System.Drawing.Size(673, 28);
+            this.comboBoxPath.TabIndex = 0;
+            this.comboBoxPath.SelectedIndexChanged += new System.EventHandler(this.comboBoxPath_SelectedIndexChanged);
+            this.comboBoxPath.MouseClick += new System.Windows.Forms.MouseEventHandler(this.comboBoxPath_MouseClick);
+            // 
+            // Redo
+            // 
+            this.Redo.Image = ((System.Drawing.Image)(resources.GetObject("Redo.Image")));
+            this.Redo.Location = new System.Drawing.Point(100, 3);
+            this.Redo.Name = "Redo";
+            this.Redo.Size = new System.Drawing.Size(88, 25);
+            this.Redo.TabIndex = 3;
+            this.Redo.UseVisualStyleBackColor = true;
+            this.Redo.Click += new System.EventHandler(this.Redo_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 442);
+            this.ClientSize = new System.Drawing.Size(865, 554);
             this.Controls.Add(this.panel1);
             this.Name = "Form1";
             this.Text = "Explorer";
@@ -182,6 +198,7 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -200,6 +217,8 @@
         private System.Windows.Forms.ColumnHeader size;
         private System.Windows.Forms.Button Undo;
         private System.Windows.Forms.Button Redo;
+        private System.Windows.Forms.ToolTip tipForSize;
+        private System.Windows.Forms.Panel panel2;
     }
 }
 

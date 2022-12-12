@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Diagnostics;
+using System.Runtime.Remoting.Channels;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace MyExplorer
 {
@@ -46,26 +49,116 @@ namespace MyExplorer
        
         private void LoadingFiles()
         {
-            FileInfo fi = new FileInfo(comboBoxPath.Text);
-            FileInfo[] files = fi.Directory.GetFiles();
-            foreach (FileInfo file in files)
+            if (comboBoxPath.Text.Length<=3)
             {
-                lvFolders.Items.Add(file.Name);
+                return;
             }
+            else
+            {
+                FileInfo fi = new FileInfo(comboBoxPath.Text);// file varmi yoxmu yoxlasin
+                try
+                {
+                    FileInfo[] files = fi.Directory.GetFiles();
+                    foreach (FileInfo file in files)
+                    {
+
+                        Icon iconForFile = Icon.ExtractAssociatedIcon(file.FullName);
+
+                        if (!lvFolders.SmallImageList.Images.ContainsKey(file.Extension))//folder mi deye yoxlayir eger folderdirse iconu deyismir
+                        {
+                            iconForFile = Icon.ExtractAssociatedIcon(file.FullName);
+                            lvFolders.SmallImageList.Images.Add(file.Extension, iconForFile);
+                            lvFolders.Items.Add(file.Name, file.Extension);
+                        }
+
+                        //= file.Extension;
+                    }
+                }
+                catch { MessageBox.Show("Acces denied"); }
+            }
+            
         }
         private void LoadingFolders()
         {
-           
+            
             lvFolders.Items.Clear();
-            DirectoryInfo di = new DirectoryInfo(comboBoxPath.Text);
-            DirectoryInfo[] folders = di.GetDirectories();
-
-            foreach (DirectoryInfo folder in folders)
+            DirectoryInfo di = new DirectoryInfo( comboBoxPath.Text);
+            
+            if (Directory.Exists(comboBoxPath.Text))
             {
-                lvFolders.Items.Add(folder.Name, 2);
+                try
+                {
+                    
+                    DirectoryInfo[] folders = di.GetDirectories();
+                    if (folders != null)
+                    {
+                        long sizeFolder = CalculateFolderSize(@"C:\Users\User\Documents\2ci kurs");
+                        foreach (DirectoryInfo folder in folders)
+                        {
+                            DateTime changeTime = Directory.GetLastWriteTime(folder.FullName);
+                            string typeFolder = "File folder";
+                            //long sizeFolder = CalculateFolderSize(folder.FullName);
+                            string[] columnArray = new string[4];
+                            columnArray[0] = folder.ToString();
+                            columnArray[1] = changeTime.ToString();
+                            columnArray[2] = typeFolder;
+                            string size = sizeFolder.ToString() + "Kb";
+                            //columnArray[3] = size;
+                            ListViewItem lvTemp = new ListViewItem(columnArray, 2);
+                            lvFolders.Items.Add(lvTemp);
+                        }
+                    }
+                }
+                catch { Console.WriteLine("Acces denied"); }
             }
         }
+        protected static long CalculateFolderSize(string folder)
+        {
+            long folderSize = 0;
+            try
+            {
+                //Checks if the path is valid or not
+                if (!Directory.Exists(folder))
+                    return folderSize;
+                else
+                {
+                    try
+                    {
+                        foreach (string file in Directory.GetFiles(folder))
+                        {
+                            if (File.Exists(file))
+                            {
+                                FileInfo finfo = new FileInfo(file);
+                                folderSize += finfo.Length;
+                            }
+                        }
 
+                        foreach (string dir in Directory.GetDirectories(folder))
+                            folderSize += CalculateFolderSize(dir);
+                    }
+                    catch (NotSupportedException e)
+                    {
+                        Console.WriteLine("Unable to calculate folder size: {0}", e.Message);
+                    }
+                }
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                Console.WriteLine("Unable to calculate folder size: {0}", e.Message);
+            }
+            return folderSize;
+        }
+
+        long FolderSize(DirectoryInfo folder)
+        {
+            long size =0;
+            long totalSize = folder.EnumerateFiles().Sum(file => file.Length);
+            foreach (FileInfo file in folder.GetFiles())
+            {
+                size +=file.Length;
+            }
+            return totalSize;
+        }
         
         private void tvDriversAndFolders_AfterSelect(object sender, TreeViewEventArgs e)
         {
@@ -74,29 +167,61 @@ namespace MyExplorer
                 lvFolders.Items.Clear();
             }
             
+
             comboBoxPath.Text = e.Node.Text;
+            pathArr.Add(comboBoxPath.Text);
+            iter++;
             LoadingFolders();
+            
+
         }
 
         string path = "";
-        string [] pathArr = new string[20];
-        int count = 0;
+        List<string> pathArr=new List<string>();
+        int iter = -1;
         private void lvFolders_DoubleClick(object sender, EventArgs e)
         {
+            comboBoxPath.Text += path + @"\";
+            if (File.Exists(comboBoxPath.Text.Substring(0, comboBoxPath.Text.Length-1)))
+            {
+                //using (StreamReader sr = File.OpenText(comboBoxPath.Text.Substring(0, comboBoxPath.Text.Length - 1)))
+                //{
+                //    String s = "";
+                //    TextFileOpener textFileopen = new TextFileOpener();
 
-        
-            lvFolders.Items.Clear();
-            comboBoxPath.Text += path + "\\";
-            LoadingFolders();
-            LoadingFiles();
+                //    while ((s = sr.ReadLine()) != null)
+                //    {
+                //        textFileopen.rtbMain.Text += s;
+                //    }
+                //    textFileopen.Show();
+                //}
+
+                ProcessStartInfo psStartInfo = new ProcessStartInfo();
+                psStartInfo.FileName = comboBoxPath.Text;
+                Process ps = Process.Start(psStartInfo);
+                comboBoxPath.Text = comboBoxPath.Text.Substring(0, comboBoxPath.Text.Length - (path.Length+1));
+
+            }
+            else
+            {
+                lvFolders.Items.Clear();
+
+               
+                pathArr.Add(comboBoxPath.Text);
+                iter++;
+
+                LoadingFolders();
+                LoadingFiles();
+            }
+           
+            // axirdan 4cu noqtedirse bu fayldir
 
         }
+        string pathForSlected = @"c:\";
         private void lvFolders_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             path = e.Item.Text;
-            pathArr[count]=path;
-            count++;
-
+            tipForSize.RemoveAll();
         }
         private void comboBoxPath_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -116,18 +241,40 @@ namespace MyExplorer
 
         private void Undo_Click(object sender, EventArgs e)
         {
-            comboBoxPath.Text = comboBoxPath.Text.Replace(pathArr[count-1], "");
-            comboBoxPath.Text = comboBoxPath.Text.Replace("\\", "\");
-            LoadingFolders();
-            LoadingFiles();
-            count--;
+            if (iter>0)
+            {
+                iter--;
+                comboBoxPath.Text = pathArr[iter];
+                LoadingFolders();
+                LoadingFiles();
+            }
+            
+            
             //lvFolders_ItemSelectionChanged(sender,e);
         }
 
         private void Redo_Click(object sender, EventArgs e)
         {
-            comboBoxPath.Text = comboBoxPath.Text.Replace("//", "/");
-            //comboBoxPath.Text=comboBoxPath.Text.Replace(pathArr[count-1], 
+            if (iter<pathArr.Count-1)
+            {
+                iter++;
+                comboBoxPath.Text = pathArr[iter];
+                LoadingFolders();
+                LoadingFiles();
+            }
+            
+            
+        }
+
+        private void lvFolders_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            pathForSlected += path + "\\";
+            long sizeFolder = CalculateFolderSize(pathForSlected);
+            string size = sizeFolder.ToString() + "byte";
+            tipForSize.SetToolTip(lvFolders, size);
+            pathForSlected= pathForSlected.Substring(0, pathForSlected.Length - (path.Length+1));
+            
+            //tipForSize.Show(size, lvFolders);
         }
     }
 }
