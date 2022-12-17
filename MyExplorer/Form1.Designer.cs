@@ -59,7 +59,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(865, 554);
+            this.panel1.Size = new System.Drawing.Size(673, 415);
             this.panel1.TabIndex = 0;
             // 
             // splitContainer1
@@ -75,8 +75,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.lvFolders);
-            this.splitContainer1.Size = new System.Drawing.Size(865, 523);
-            this.splitContainer1.SplitterDistance = 188;
+            this.splitContainer1.Size = new System.Drawing.Size(673, 384);
+            this.splitContainer1.SplitterDistance = 146;
             this.splitContainer1.TabIndex = 1;
             // 
             // tvDriversAndFolders
@@ -87,7 +87,7 @@
             this.tvDriversAndFolders.Location = new System.Drawing.Point(0, 0);
             this.tvDriversAndFolders.Name = "tvDriversAndFolders";
             this.tvDriversAndFolders.SelectedImageIndex = 0;
-            this.tvDriversAndFolders.Size = new System.Drawing.Size(188, 523);
+            this.tvDriversAndFolders.Size = new System.Drawing.Size(146, 384);
             this.tvDriversAndFolders.TabIndex = 0;
             this.tvDriversAndFolders.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvDriversAndFolders_AfterSelect);
             // 
@@ -111,7 +111,7 @@
             this.lvFolders.HideSelection = false;
             this.lvFolders.Location = new System.Drawing.Point(0, 0);
             this.lvFolders.Name = "lvFolders";
-            this.lvFolders.Size = new System.Drawing.Size(673, 523);
+            this.lvFolders.Size = new System.Drawing.Size(523, 384);
             this.lvFolders.SmallImageList = this.icons;
             this.lvFolders.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvFolders.StateImageList = this.icons;
@@ -150,26 +150,29 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(865, 31);
+            this.panel2.Size = new System.Drawing.Size(673, 31);
             this.panel2.TabIndex = 5;
             // 
             // Undo
             // 
             this.Undo.Image = ((System.Drawing.Image)(resources.GetObject("Undo.Image")));
-            this.Undo.Location = new System.Drawing.Point(3, 2);
+            this.Undo.Location = new System.Drawing.Point(3, 4);
             this.Undo.Name = "Undo";
-            this.Undo.Size = new System.Drawing.Size(91, 27);
+            this.Undo.Size = new System.Drawing.Size(67, 27);
             this.Undo.TabIndex = 4;
             this.Undo.UseVisualStyleBackColor = true;
             this.Undo.Click += new System.EventHandler(this.Undo_Click);
             // 
             // comboBoxPath
             // 
+            this.comboBoxPath.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxPath.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBoxPath.FormattingEnabled = true;
-            this.comboBoxPath.Location = new System.Drawing.Point(192, 3);
+            this.comboBoxPath.Location = new System.Drawing.Point(150, 3);
             this.comboBoxPath.Name = "comboBoxPath";
-            this.comboBoxPath.Size = new System.Drawing.Size(673, 28);
+            this.comboBoxPath.Size = new System.Drawing.Size(520, 28);
             this.comboBoxPath.TabIndex = 0;
             this.comboBoxPath.SelectedIndexChanged += new System.EventHandler(this.comboBoxPath_SelectedIndexChanged);
             this.comboBoxPath.MouseClick += new System.Windows.Forms.MouseEventHandler(this.comboBoxPath_MouseClick);
@@ -177,9 +180,9 @@
             // Redo
             // 
             this.Redo.Image = ((System.Drawing.Image)(resources.GetObject("Redo.Image")));
-            this.Redo.Location = new System.Drawing.Point(100, 3);
+            this.Redo.Location = new System.Drawing.Point(75, 3);
             this.Redo.Name = "Redo";
-            this.Redo.Size = new System.Drawing.Size(88, 25);
+            this.Redo.Size = new System.Drawing.Size(71, 28);
             this.Redo.TabIndex = 3;
             this.Redo.UseVisualStyleBackColor = true;
             this.Redo.Click += new System.EventHandler(this.Redo_Click);
@@ -188,7 +191,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(865, 554);
+            this.ClientSize = new System.Drawing.Size(673, 415);
             this.Controls.Add(this.panel1);
             this.Name = "Form1";
             this.Text = "Explorer";

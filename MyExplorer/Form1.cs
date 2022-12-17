@@ -16,6 +16,8 @@ namespace MyExplorer
 {
     public partial class Form1 : Form
     {
+        ListViewItem lvTemp;
+        string[] columnArray = new string[4];
         public Form1()
         {
             InitializeComponent();
@@ -69,6 +71,23 @@ namespace MyExplorer
                             iconForFile = Icon.ExtractAssociatedIcon(file.FullName);
                             lvFolders.SmallImageList.Images.Add(file.Extension, iconForFile);
                             lvFolders.Items.Add(file.Name, file.Extension);
+                            string ext = Path.GetExtension(file.FullName);
+                            long size = file.Length;
+                            DateTime changeTime = Directory.GetLastWriteTime(file.FullName);
+                            string typeFolder = ext;
+              
+                            columnArray[0] = file.Name;
+                            columnArray[1] = changeTime.ToString();
+                            columnArray[2] = ext;
+                            if (columnArray[2]!= "File folder")
+                            {
+                                columnArray[3] = size.ToString();
+                            }
+                            
+                            lvTemp = new ListViewItem(columnArray);
+                            lvFolders.Items.Add(lvTemp);
+
+
                         }
 
                         //= file.Extension;
@@ -78,6 +97,7 @@ namespace MyExplorer
             }
             
         }
+    
         private void LoadingFolders()
         {
             
@@ -98,13 +118,12 @@ namespace MyExplorer
                             DateTime changeTime = Directory.GetLastWriteTime(folder.FullName);
                             string typeFolder = "File folder";
                             //long sizeFolder = CalculateFolderSize(folder.FullName);
-                            string[] columnArray = new string[4];
                             columnArray[0] = folder.ToString();
                             columnArray[1] = changeTime.ToString();
                             columnArray[2] = typeFolder;
                             string size = sizeFolder.ToString() + "Kb";
-                            //columnArray[3] = size;
-                            ListViewItem lvTemp = new ListViewItem(columnArray, 2);
+                            columnArray[3] = "";
+                            lvTemp = new ListViewItem(columnArray, 2);
                             lvFolders.Items.Add(lvTemp);
                         }
                     }
@@ -134,6 +153,7 @@ namespace MyExplorer
                         }
 
                         foreach (string dir in Directory.GetDirectories(folder))
+                            if(folderSize< 1000000000)
                             folderSize += CalculateFolderSize(dir);
                     }
                     catch (NotSupportedException e)
@@ -175,13 +195,16 @@ namespace MyExplorer
             
 
         }
-
+        string pathForSlected = @"c:\";
         string path = "";
         List<string> pathArr=new List<string>();
         int iter = -1;
         private void lvFolders_DoubleClick(object sender, EventArgs e)
         {
+         
+            comboBoxPath.Items.Add(comboBoxPath.Text);
             comboBoxPath.Text += path + @"\";
+
             if (File.Exists(comboBoxPath.Text.Substring(0, comboBoxPath.Text.Length-1)))
             {
                 //using (StreamReader sr = File.OpenText(comboBoxPath.Text.Substring(0, comboBoxPath.Text.Length - 1)))
@@ -199,14 +222,14 @@ namespace MyExplorer
                 ProcessStartInfo psStartInfo = new ProcessStartInfo();
                 psStartInfo.FileName = comboBoxPath.Text;
                 Process ps = Process.Start(psStartInfo);
-                comboBoxPath.Text = comboBoxPath.Text.Substring(0, comboBoxPath.Text.Length - (path.Length+1));
+                comboBoxPath.Text = comboBoxPath.Text.Substring(0, comboBoxPath.Text.Length - (path.Length + 1));
 
             }
             else
             {
                 lvFolders.Items.Clear();
 
-               
+                tipForSize.RemoveAll();
                 pathArr.Add(comboBoxPath.Text);
                 iter++;
 
@@ -217,7 +240,7 @@ namespace MyExplorer
             // axirdan 4cu noqtedirse bu fayldir
 
         }
-        string pathForSlected = @"c:\";
+        
         private void lvFolders_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             path = e.Item.Text;
@@ -265,15 +288,16 @@ namespace MyExplorer
             
             
         }
-
+        
         private void lvFolders_SelectedIndexChanged(object sender, EventArgs e)
         {
-            pathForSlected += path + "\\";
+            pathForSlected = comboBoxPath.Text +path;
+         
             long sizeFolder = CalculateFolderSize(pathForSlected);
             string size = sizeFolder.ToString() + "byte";
             tipForSize.SetToolTip(lvFolders, size);
-            pathForSlected= pathForSlected.Substring(0, pathForSlected.Length - (path.Length+1));
-            
+            pathForSlected = pathForSlected.Substring(0, pathForSlected.Length - (path.Length + 1));
+         
             //tipForSize.Show(size, lvFolders);
         }
     }
